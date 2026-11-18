@@ -111,6 +111,8 @@
       opacity: 0; transition: opacity 0.25s;
     }
     .voucher-card.redeemed .voucher-stamp { opacity: 1; }
+    .voucher-special { grid-column: 1 / -1; background: linear-gradient(135deg, #fff, #ffdbe6); border-style: solid; border-color: #c9184a; }
+    .voucher-special h3 { max-width: 600px; font-size: 1.4rem; }
     .voucher-announcement { min-height: 1.5em; margin-top: 16px; font-weight: 600; color: #a4133c; }
     .floating-heart {
       position: fixed; left: 50%; top: 50%; z-index: 200; pointer-events: none;
@@ -179,7 +181,7 @@
 
     <section class="vouchers" aria-labelledby="vouchers-title">
       <h2 id="vouchers-title">Nuestros vales de amor 💌</h2>
-      <p class="vouchers-intro">Canjéalo cuando quieras. Pero solo se puede usar una vez.</p>
+      <p class="vouchers-intro">Cada vale, una excusa para elegirnos. Canjealos cuando quieras: cada uno se usa una sola vez, pero las ganas de hacerte feliz no se terminan.</p>
       <div class="voucher-grid">
         <article class="voucher-card" data-voucher="beso"><span class="voucher-label">VALE</span><h3>Vale por un beso</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
         <article class="voucher-card" data-voucher="masaje"><span class="voucher-label">VALE</span><h3>Vale por un masaje</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
@@ -189,6 +191,19 @@
         <article class="voucher-card" data-voucher="viaje"><span class="voucher-label">VALE</span><h3>Vale por un viaje sorpresa</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
         <article class="voucher-card" data-voucher="series"><span class="voucher-label">VALE</span><h3>Vale por un maratón de series</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
         <article class="voucher-card" data-voucher="abrazados"><span class="voucher-label">VALE</span><h3>Vale por dormir abrazados</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="carta"><span class="voucher-label">VALE</span><h3>💌 Vale por una carta de amor escrita a mano</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="cena"><span class="voucher-label">VALE</span><h3>🍝 Vale por una cena preparada por mí</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="atardecer"><span class="voucher-label">VALE</span><h3>🌅 Vale por ver un atardecer juntos</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="picnic"><span class="voucher-label">VALE</span><h3>🧺 Vale por un picnic para los dos</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="cita-sorpresa"><span class="voucher-label">VALE</span><h3>🎁 Vale por una cita sorpresa</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="baile"><span class="voucher-label">VALE</span><h3>💃 Vale por bailar una canción</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="postre"><span class="voucher-label">VALE</span><h3>🍰 Vale por tu postre favorito hecho por mí</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="paseo"><span class="voucher-label">VALE</span><h3>🚗 Vale por un paseo sin rumbo y con nuestra música</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="fotos"><span class="voucher-label">VALE</span><h3>📸 Vale por una tarde de fotos y recuerdos juntos</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="mimos"><span class="voucher-label">VALE</span><h3>🥰 Vale por un día entero de mimos</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="juegos"><span class="voucher-label">VALE</span><h3>🎲 Vale por una noche de juegos en pareja</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="primera-cita"><span class="voucher-label">VALE</span><h3>❤️ Vale por volver a vivir nuestra primera cita</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card voucher-special" data-voucher="plan-elegido"><span class="voucher-label">VALE ESPECIAL</span><h3>Vos elegís el plan. Yo me encargo de hacerlo realidad.</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
       </div>
       <p class="voucher-announcement" id="voucher-announcement" role="status" aria-live="polite"></p>
     </section>
