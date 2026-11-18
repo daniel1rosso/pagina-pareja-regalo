@@ -13,4 +13,8 @@ Abrí `index.html` en un navegador. No requiere instalación ni conexión a inte
 
 Para agregar o cambiar una foto, guardala en `imagenes/` y actualizá su ruta, descripción y texto en la sección **GALERÍA** de `index.html`. Las fechas de los contadores están en `metDate` y `datingDate`, al comienzo del bloque `<script>`.
 
+## Vales de amor
+
+Al canjear un vale, aparece una animación de corazones y el vale queda marcado como **Visto ✓**. El estado se guarda en el navegador donde se canjeó; si se abre la página en otro navegador o dispositivo, los vales empiezan sin canjear.
+
 Si subís la página a otro servidor, conservá `index.html` y la carpeta `imagenes/` juntos.

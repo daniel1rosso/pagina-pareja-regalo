@@ -74,13 +74,56 @@
       color: white; font-size: 1.6rem; line-height: 1; cursor: pointer;
     }
 
-    /* Carta final */
+    /* Dedicatoria */
     .letter {
       background: white; padding: 30px; border-radius: 20px; line-height: 1.7;
       box-shadow: 0 10px 25px rgba(164, 19, 60, 0.1); text-align: left; font-size: 1.05rem;
     }
     .letter p + p { margin-top: 1em; }
     .love-highlight { color: #c9184a; font-size: 1.18em; font-weight: 700; }
+
+    /* Vales de amor */
+    .vouchers { margin-top: 48px; }
+    .vouchers h2 { color: #a4133c; font-size: 2rem; }
+    .vouchers-intro { margin: 10px 0 25px; color: #800f2f; }
+    .voucher-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+    .voucher-card {
+      position: relative; display: flex; flex-direction: column; align-items: center; gap: 15px;
+      min-height: 200px; padding: 22px 18px; background: #fff; border: 2px dashed #f284a2;
+      border-radius: 18px; box-shadow: 0 8px 20px rgba(164, 19, 60, 0.1);
+      transition: transform 0.25s, opacity 0.25s;
+    }
+    .voucher-card:not(.redeemed):hover { transform: translateY(-4px); }
+    .voucher-label { color: #c9184a; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.2em; }
+    .voucher-card h3 { flex: 1; display: grid; place-items: center; font-size: 1.2rem; }
+    .voucher-button {
+      border: 0; border-radius: 999px; background: #c9184a; color: #fff; padding: 11px 24px;
+      font-size: 0.9rem; font-weight: 700; letter-spacing: 0.06em; cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .voucher-button:hover:not(:disabled) { background: #a4133c; transform: scale(1.05); }
+    .voucher-button:focus-visible { outline: 3px solid #800f2f; outline-offset: 3px; }
+    .voucher-card.redeemed { background: #ffe4eb; border-style: solid; opacity: 0.82; }
+    .voucher-card.redeemed .voucher-button { background: #8c5868; cursor: default; }
+    .voucher-stamp {
+      position: absolute; top: 12px; right: 12px; color: #8c1740;
+      font-size: 0.72rem; font-weight: 800; transform: rotate(12deg);
+      opacity: 0; transition: opacity 0.25s;
+    }
+    .voucher-card.redeemed .voucher-stamp { opacity: 1; }
+    .voucher-announcement { min-height: 1.5em; margin-top: 16px; font-weight: 600; color: #a4133c; }
+    .floating-heart {
+      position: fixed; left: 50%; top: 50%; z-index: 200; pointer-events: none;
+      font-size: var(--size); animation: heartBurst 1.8s ease-out forwards;
+    }
+    @keyframes heartBurst {
+      from { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
+      to { opacity: 0; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) rotate(var(--rotation)) scale(1.5); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .floating-heart { animation: none; display: none; }
+      .voucher-card, .voucher-button { transition: none; }
+    }
   </style>
 </head>
 <body>
@@ -133,6 +176,22 @@
       <p>De todas estas fotos, mis favoritas son las que todavía nos quedan por sacar.</p>
       <p>Por muchos años más juntos. <span class="love-highlight">Te amo infinito. ❤️ 💕 💖</span></p>
     </div>
+
+    <section class="vouchers" aria-labelledby="vouchers-title">
+      <h2 id="vouchers-title">Nuestros vales de amor 💌</h2>
+      <p class="vouchers-intro">Canjéalo cuando quieras. Pero solo se puede usar una vez.</p>
+      <div class="voucher-grid">
+        <article class="voucher-card" data-voucher="beso"><span class="voucher-label">VALE</span><h3>Vale por un beso</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="masaje"><span class="voucher-label">VALE</span><h3>Vale por un masaje</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="pelicula"><span class="voucher-label">VALE</span><h3>Vale por la película que elijas</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="desayuno"><span class="voucher-label">VALE</span><h3>Vale por desayuno en la cama</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="sin-telefono"><span class="voucher-label">VALE</span><h3>Vale por una noche sin teléfono</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="viaje"><span class="voucher-label">VALE</span><h3>Vale por un viaje sorpresa</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="series"><span class="voucher-label">VALE</span><h3>Vale por un maratón de series</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+        <article class="voucher-card" data-voucher="abrazados"><span class="voucher-label">VALE</span><h3>Vale por dormir abrazados</h3><span class="voucher-stamp" aria-hidden="true">VISTO ✓</span><button class="voucher-button" type="button">CANJEAR</button></article>
+      </div>
+      <p class="voucher-announcement" id="voucher-announcement" role="status" aria-live="polite"></p>
+    </section>
   </div>
 
   <dialog class="photo-viewer" id="photo-viewer" aria-label="Foto ampliada">
@@ -223,6 +282,57 @@
     photoViewer.querySelector('.photo-viewer-close').addEventListener('click', () => photoViewer.close());
     photoViewer.addEventListener('click', (event) => {
       if (event.target === photoViewer) photoViewer.close();
+    });
+
+    // Cada vale se puede canjear una vez en este navegador.
+    const voucherStorageKey = 'juli-dani-vales-v1';
+    let redeemedVouchers = new Set();
+    try {
+      const saved = JSON.parse(localStorage.getItem(voucherStorageKey) || '[]');
+      if (Array.isArray(saved)) redeemedVouchers = new Set(saved);
+    } catch (_) {
+      // La página sigue funcionando si el navegador bloquea el almacenamiento.
+    }
+
+    function markVoucherRedeemed(card) {
+      card.classList.add('redeemed');
+      const button = card.querySelector('.voucher-button');
+      button.textContent = 'VISTO ✓';
+      button.disabled = true;
+      button.setAttribute('aria-label', `${card.querySelector('h3').textContent}: canjeado`);
+    }
+
+    function celebrateVoucher() {
+      const hearts = ['❤️', '💕', '💖', '💘', '💝', '💗', '💓'];
+      for (let i = 0; i < 28; i++) {
+        const heart = document.createElement('span');
+        heart.className = 'floating-heart';
+        heart.textContent = hearts[i % hearts.length];
+        heart.style.setProperty('--x', `${(Math.random() - 0.5) * 110}vw`);
+        heart.style.setProperty('--y', `${(Math.random() - 0.5) * 110}vh`);
+        heart.style.setProperty('--rotation', `${(Math.random() - 0.5) * 720}deg`);
+        heart.style.setProperty('--size', `${1 + Math.random() * 1.5}rem`);
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 1800);
+      }
+    }
+
+    document.querySelectorAll('.voucher-card').forEach((card) => {
+      const id = card.dataset.voucher;
+      if (redeemedVouchers.has(id)) markVoucherRedeemed(card);
+      card.querySelector('.voucher-button').addEventListener('click', () => {
+        if (redeemedVouchers.has(id)) return;
+        redeemedVouchers.add(id);
+        try {
+          localStorage.setItem(voucherStorageKey, JSON.stringify([...redeemedVouchers]));
+        } catch (_) {
+          // El canje se conserva durante esta visita aunque no haya almacenamiento.
+        }
+        markVoucherRedeemed(card);
+        document.getElementById('voucher-announcement').textContent =
+          `¡${card.querySelector('h3').textContent} canjeado! ❤️`;
+        celebrateVoucher();
+      });
     });
   </script>
 </body>
