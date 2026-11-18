@@ -126,6 +126,30 @@
       .floating-heart { animation: none; display: none; }
       .voucher-card, .voucher-button { transition: none; }
     }
+
+    /* Corazón que guía hacia los vales */
+    .gift-cue {
+      position: fixed; left: 50%; bottom: 20px; z-index: 90;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      width: 66px; height: 66px; border: 1px solid #ffb3c1; border-radius: 50%;
+      background: linear-gradient(145deg, #fff, #ffd6e0); color: #c9184a;
+      box-shadow: 0 8px 24px rgba(164, 19, 60, 0.28);
+      cursor: pointer; opacity: 0; visibility: hidden; pointer-events: none;
+      transform: translateX(-50%); transition: opacity 0.35s, visibility 0.35s;
+    }
+    .gift-cue.visible { opacity: 1; visibility: visible; pointer-events: auto; }
+    .gift-cue:hover { box-shadow: 0 10px 30px rgba(164, 19, 60, 0.42); }
+    .gift-cue:focus-visible { outline: 3px solid #800f2f; outline-offset: 4px; }
+    .gift-cue-inner { display: flex; flex-direction: column; align-items: center; gap: 1px; animation: giftCueFloat 1.4s ease-in-out infinite; }
+    .gift-cue-heart { font-size: 1.8rem; line-height: 1; filter: drop-shadow(0 2px 3px rgba(164, 19, 60, 0.3)); }
+    .gift-cue-arrow { width: 11px; height: 11px; border-right: 3px solid #c9184a; border-bottom: 3px solid #c9184a; transform: rotate(45deg); }
+    @keyframes giftCueFloat {
+      0%, 100% { transform: translateY(-3px) scale(1); }
+      50% { transform: translateY(5px) scale(1.1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .gift-cue-inner { animation: none; }
+    }
   </style>
 </head>
 <body>
@@ -179,7 +203,7 @@
       <p>Por muchos años más juntos. <span class="love-highlight">Te amo infinito. ❤️ 💕 💖</span></p>
     </div>
 
-    <section class="vouchers" aria-labelledby="vouchers-title">
+    <section class="vouchers" id="vouchers" aria-labelledby="vouchers-title">
       <h2 id="vouchers-title">Nuestros vales de amor 💌</h2>
       <p class="vouchers-intro">Cada vale, una excusa para elegirnos. Canjealos cuando quieras: cada uno se usa una sola vez, pero las ganas de hacerte feliz no se terminan.</p>
       <div class="voucher-grid">
@@ -208,6 +232,10 @@
       <p class="voucher-announcement" id="voucher-announcement" role="status" aria-live="polite"></p>
     </section>
   </div>
+
+  <button class="gift-cue" id="gift-cue" type="button" aria-label="Ir a los vales de amor">
+    <span class="gift-cue-inner" aria-hidden="true"><span class="gift-cue-heart">💗</span><span class="gift-cue-arrow"></span></span>
+  </button>
 
   <dialog class="photo-viewer" id="photo-viewer" aria-label="Foto ampliada">
     <div class="photo-viewer-content">
@@ -239,6 +267,7 @@
         setTimeout(() => {
           document.getElementById('lock-screen').classList.add('unlocked');
           document.getElementById('main-content').classList.add('visible');
+          document.getElementById('gift-cue').classList.add('visible');
         }, 400);
       }
     });
@@ -350,6 +379,23 @@
         celebrateVoucher();
       });
     });
+
+    const giftCue = document.getElementById('gift-cue');
+    const vouchersSection = document.getElementById('vouchers');
+    giftCue.addEventListener('click', () => {
+      giftCue.classList.remove('visible');
+      vouchersSection.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'start'
+      });
+    });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([entry]) => {
+        if (document.getElementById('lock-screen').classList.contains('unlocked')) {
+          giftCue.classList.toggle('visible', !entry.isIntersecting);
+        }
+      }, { threshold: 0.05 }).observe(vouchersSection);
+    }
   </script>
 </body>
 </html>
