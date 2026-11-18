@@ -18,3 +18,7 @@ Para agregar o cambiar una foto, guardala en `imagenes/` y actualizá su ruta, d
 Al canjear un vale, aparece una animación de corazones y el vale queda marcado como **Visto ✓**. El estado se guarda en el navegador donde se canjeó; si se abre la página en otro navegador o dispositivo, los vales empiezan sin canjear.
 
 Si subís la página a otro servidor, conservá `index.html` y la carpeta `imagenes/` juntos.
+
+## Compartir por WhatsApp
+
+Copiá el contenido de `mensaje-whatsapp.txt` y pegalo en el chat. El enlace tiene una portada configurada mediante metadatos Open Graph: `portada-whatsapp.jpg`. El archivo `portada-whatsapp.svg` es la versión editable de esa portada.
