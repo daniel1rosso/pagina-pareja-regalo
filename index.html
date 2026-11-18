@@ -300,9 +300,10 @@
     });
 
     // Cada vale se puede canjear una vez en este navegador.
-    const voucherStorageKey = 'juli-dani-vales-v1';
+    const voucherStorageKey = 'juli-dani-vales-v2';
     let redeemedVouchers = new Set();
     try {
+      localStorage.removeItem('juli-dani-vales-v1');
       const saved = JSON.parse(localStorage.getItem(voucherStorageKey) || '[]');
       if (Array.isArray(saved)) redeemedVouchers = new Set(saved);
     } catch (_) {
