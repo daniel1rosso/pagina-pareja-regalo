@@ -261,7 +261,7 @@
 
     <section class="music-section" aria-label="Reproductor de Entra en Mi Vida">
       <p>Entra en Mi Vida · Sin Bandera</p>
-      <div class="spotify-player" id="spotify-player"></div>
+      <div class="spotify-player"><div id="spotify-mount"></div></div>
       <p class="music-fallback">Si todavía no suena, tocá play. También podés <a href="https://open.spotify.com/track/3MN2J0Q9oFObqxKitXpchw" target="_blank" rel="noopener noreferrer">escucharla en Spotify</a>.</p>
     </section>
   </div>
@@ -459,11 +459,11 @@
     // El quinto toque intenta iniciar la canción. Los toques anteriores no la reinician.
     window.onSpotifyIframeApiReady = (SpotifyIframeApi) => {
       SpotifyIframeApi.createController(
-        document.getElementById('spotify-player'),
+        document.getElementById('spotify-mount'),
         { uri: 'spotify:track:3MN2J0Q9oFObqxKitXpchw', width: '100%', height: 80 },
         (controller) => {
           spotifyController = controller;
-          const iframe = document.querySelector('#spotify-player iframe');
+          const iframe = document.querySelector('.spotify-player iframe');
           if (iframe) iframe.loading = 'eager';
           controller.addListener('ready', () => {
             spotifyReady = true;
