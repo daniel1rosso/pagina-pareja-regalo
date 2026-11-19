@@ -163,6 +163,20 @@
     @media (prefers-reduced-motion: reduce) {
       .gift-cue-inner { animation: none; }
     }
+
+    /* Reproductor de música */
+    .music-section {
+      margin-top: 48px; padding: 25px; border-radius: 20px;
+      background: white; box-shadow: 0 10px 25px rgba(164, 19, 60, 0.1);
+    }
+    .music-section p { margin: 0 0 18px; color: #800f2f; }
+    .spotify-player { min-height: 80px; min-width: 280px; }
+    .spotify-player iframe { border-radius: 12px; }
+    .music-section .music-fallback { margin: 14px 0 0; font-size: 0.9rem; }
+    .music-section a { color: #a4133c; }
+    @media (max-width: 420px) {
+      .music-section { margin-left: -20px; margin-right: -20px; padding: 22px 20px; }
+    }
   </style>
 </head>
 <body>
@@ -244,6 +258,12 @@
       </div>
       <p class="voucher-announcement" id="voucher-announcement" role="status" aria-live="polite"></p>
     </section>
+
+    <section class="music-section" aria-label="Reproductor de Entra en Mi Vida">
+      <p>Entra en Mi Vida · Sin Bandera</p>
+      <div class="spotify-player" id="spotify-player"></div>
+      <p class="music-fallback">Si todavía no suena, tocá play. También podés <a href="https://open.spotify.com/track/3MN2J0Q9oFObqxKitXpchw" target="_blank" rel="noopener noreferrer">escucharla en Spotify</a>.</p>
+    </section>
   </div>
 
   <button class="gift-cue" id="gift-cue" type="button" aria-label="Ir a los vales de amor">
@@ -269,14 +289,40 @@
     const heart = document.getElementById('heart');
     const progress = document.getElementById('progress');
     const lockMsg = document.getElementById('lock-msg');
+    let spotifyController = null;
+    let spotifyReady = false;
+    let spotifyPlayRequested = false;
+    let spotifyAutoplayAttempted = false;
+    let spotifyHasPlayed = false;
+    let spotifyLoopTimer = null;
+    let spotifyLastLoop = 0;
+
+    function startSpotifyAfterUnlock() {
+      if (!spotifyPlayRequested || !spotifyReady || spotifyAutoplayAttempted) return;
+      spotifyAutoplayAttempted = true;
+      const attempt = spotifyController.play();
+      if (attempt && typeof attempt.catch === 'function') attempt.catch(() => {});
+    }
+
+    function loopSpotify() {
+      if (!spotifyReady || Date.now() - spotifyLastLoop < 3000) return;
+      spotifyLastLoop = Date.now();
+      clearTimeout(spotifyLoopTimer);
+      spotifyController.restart();
+      const attempt = spotifyController.play();
+      if (attempt && typeof attempt.catch === 'function') attempt.catch(() => {});
+    }
 
     heart.addEventListener('click', () => {
+      if (taps >= requiredTaps) return;
       taps++;
       progress.style.width = `${(taps / requiredTaps) * 100}%`;
       if (taps < requiredTaps) {
         lockMsg.textContent = `¡Seguí tocando! (${taps}/${requiredTaps})`;
       } else {
         lockMsg.textContent = '¡Desbloqueado! ❤️';
+        spotifyPlayRequested = true;
+        startSpotifyAfterUnlock();
         setTimeout(() => {
           document.getElementById('lock-screen').classList.add('unlocked');
           document.getElementById('main-content').classList.add('visible');
@@ -409,6 +455,40 @@
         }
       }, { threshold: 0.05 }).observe(vouchersSection);
     }
+
+    // El quinto toque intenta iniciar la canción. Los toques anteriores no la reinician.
+    window.onSpotifyIframeApiReady = (SpotifyIframeApi) => {
+      SpotifyIframeApi.createController(
+        document.getElementById('spotify-player'),
+        { uri: 'spotify:track:3MN2J0Q9oFObqxKitXpchw', width: '100%', height: 80 },
+        (controller) => {
+          spotifyController = controller;
+          const iframe = document.querySelector('#spotify-player iframe');
+          if (iframe) iframe.loading = 'eager';
+          controller.addListener('ready', () => {
+            spotifyReady = true;
+            startSpotifyAfterUnlock();
+          });
+          controller.addListener('playback_started', () => {
+            spotifyHasPlayed = true;
+          });
+          controller.addListener('playback_update', ({ data }) => {
+            if (!data || !data.duration) return;
+            clearTimeout(spotifyLoopTimer);
+            if (data.isPaused) {
+              if (spotifyHasPlayed && data.position >= data.duration - 500) loopSpotify();
+              return;
+            }
+            spotifyHasPlayed = true;
+            spotifyLoopTimer = setTimeout(loopSpotify, Math.max(200, data.duration - data.position + 200));
+          });
+        }
+      );
+    };
+    const spotifyScript = document.createElement('script');
+    spotifyScript.src = 'https://open.spotify.com/embed/iframe-api/v1';
+    spotifyScript.async = true;
+    document.body.appendChild(spotifyScript);
   </script>
 </body>
 </html>
