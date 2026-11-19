@@ -17,6 +17,10 @@ Para agregar o cambiar una foto, guardala en `imagenes/` y actualizá su ruta, d
 
 Al canjear un vale, aparece una animación de corazones y el vale queda marcado como **Visto ✓**. El estado se guarda en el navegador donde se canjeó; si se abre la página en otro navegador o dispositivo, los vales empiezan sin canjear.
 
+## Nuestra canción
+
+Al final de la página hay un reproductor compacto de Spotify con «Entra en Mi Vida» de Sin Bandera. La página intenta iniciar la canción al cargar y al tocar el corazón de apertura; si el navegador bloquea el inicio automático, hay que tocar play. El reproductor de Spotify permite play y pausa, pero no ofrece un control de mute para la página.
+
 Si subís la página a otro servidor, conservá `index.html` y la carpeta `imagenes/` juntos.
 
 ## Compartir por WhatsApp
